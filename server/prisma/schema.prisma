@@ -1,0 +1,134 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Admin {
+  id        String   @id @default(uuid())
+  username  String   @unique
+  password  String
+  createdAt DateTime @default(now())
+}
+
+model Product {
+  id          String   @id @default(uuid())
+  name        String
+  category    String
+  price       Int
+  description String
+  isFeatured  Boolean  @default(false)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  images      Image[]
+  variants    Variant[]
+  sizes       Size[]
+}
+
+model Image {
+  id        String  @id @default(uuid())
+  url       String
+  publicId  String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Variant {
+  id        String  @id @default(uuid())
+  name      String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+model Size {
+  id        String  @id @default(uuid())
+  name      String
+  productId String
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
+}
+
+// Model untuk elemen web dinamis (seperti teks di Home)
+model SiteSettings {
+  id               String   @id @default("global")
+  heroTitle        String   @default("Solusi Terbaik Perlengkapan Outdoor")
+  heroDesc         String   @default("Temukan berbagai pilihan jas hujan dan cover motor premium untuk perlindungan maksimal.")
+  heroBgUrl1       String?
+  heroBgUrl2       String?
+  heroBgUrl3       String?
+  heroBgUrl4       String?
+  heroProductUrl   String?
+  heroProductTitle String   @default("Jas Hujan Premium")
+  heroProductPrice String   @default("Rp 250.000")
+  heroProductDesc  String   @default("Warna Tersedia")
+  whatsapp         String   @default("628137509422")
+  address          String   @default("Jakarta Selatan, Indonesia")
+  operationalHours String   @default("Senin - Jumat: 09:00 - 18:00, Sabtu: 09:00 - 15:00, Minggu: Tutup")
+  instagram        String   @default("https://instagram.com")
+  facebook         String   @default("https://facebook.com")
+  tiktok           String   @default("https://tiktok.com")
+  updatedAt        DateTime @updatedAt
+}
+
+model Brand {
+  id        String   @id @default(uuid())
+  name      String
+  logoUrl   String
+  publicId  String?
+  createdAt DateTime @default(now())
+}
+
+model Category {
+  id          String   @id @default(uuid())
+  name        String   @unique
+  description String?
+  createdAt   DateTime @default(now())
+}
+
+model CustomService {
+  id          String   @id @default(uuid())
+  title       String
+  description String
+  icon        String?  // Nama icon (lucide-react) - optional fallback
+  imageUrl    String?
+  publicId    String?
+  createdAt   DateTime @default(now())
+}
+
+model Gallery {
+  id        String   @id @default(uuid())
+  imageUrl  String
+  publicId  String?
+  caption   String?
+  createdAt DateTime @default(now())
+}
+
+model Video {
+  id           String   @id @default(uuid())
+  title        String
+  youtubeUrl   String?
+  videoUrl     String?
+  thumbnailUrl String?
+  publicId     String?
+  createdAt    DateTime @default(now())
+}
+
+model Testimonial {
+  id        String   @id @default(uuid())
+  name      String
+  role      String?
+  content   String
+  avatarUrl String?
+  rating    Int      @default(5)
+  createdAt DateTime @default(now())
+}
+
+model Faq {
+  id        String   @id @default(uuid())
+  question  String
+  answer    String
+  createdAt DateTime @default(now())
+}
