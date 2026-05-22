@@ -1,9 +1,10 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { useNavigate } from "react-router";
 import { Sofa, PaintRoller, Sparkles, PlusCircle, Package } from "lucide-react";
 
-const API = "http://localhost:5000";
+const API = API_URL;
 
 const defaultIcons = [
   { icon: <Package size={24} />, color: "bg-blue-100 text-blue-600" },

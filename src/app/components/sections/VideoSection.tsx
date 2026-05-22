@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { Play, X } from "lucide-react";
@@ -24,7 +25,7 @@ export function VideoSection() {
   const [activeVideo, setActiveVideo] = useState<VideoItem | null>(null);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/cms/videos")
+    fetch(`${API_URL}/api/cms/videos`)
       .then(res => res.json())
       .then(data => setVideos(data))
       .catch(console.error);
@@ -92,7 +93,7 @@ export function VideoSection() {
             <div className="w-full max-w-5xl aspect-video bg-black rounded-2xl overflow-hidden relative">
               {activeVideo.videoUrl ? (
                 <video 
-                  src={activeVideo.videoUrl.startsWith('http') ? activeVideo.videoUrl : `http://localhost:5000${activeVideo.videoUrl}`} 
+                  src={activeVideo.videoUrl.startsWith('http') ? activeVideo.videoUrl : `${API_URL}${activeVideo.videoUrl}`} 
                   className="w-full h-full" 
                   controls
                   autoPlay

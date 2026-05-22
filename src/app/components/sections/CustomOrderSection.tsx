@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { CheckCircle2, MessageSquareText, Wrench } from "lucide-react";
@@ -16,7 +17,7 @@ export function CustomOrderSection() {
   const { getWhatsAppUrl } = useSettings();
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/cms/services")
+    fetch(`${API_URL}/api/cms/services`)
       .then(res => res.json())
       .then(data => setServices(data))
       .catch(console.error);
@@ -45,7 +46,7 @@ export function CustomOrderSection() {
                 <div className="w-12 h-12 rounded-xl bg-[#b89341]/10 flex items-center justify-center text-[#b89341] mb-4 overflow-hidden">
                   {service.imageUrl ? (
                     <img 
-                      src={service.imageUrl.startsWith('http') ? service.imageUrl : `http://localhost:5000${service.imageUrl}`} 
+                      src={service.imageUrl.startsWith('http') ? service.imageUrl : `${API_URL}${service.imageUrl}`} 
                       alt={service.title} 
                       className="w-full h-full object-cover" 
                     />

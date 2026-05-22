@@ -1,8 +1,9 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ChevronDown } from "lucide-react";
 
-const API = "http://localhost:5000";
+const API = API_URL;
 
 export function FAQSection() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);

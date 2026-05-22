@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { Trash2, Plus, Star, MessageSquare } from "lucide-react";
 
@@ -22,7 +23,7 @@ export function AdminTestimonials() {
 
   const fetchTestimonials = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/cms/testimonials");
+      const res = await fetch(`${API_URL}/api/cms/testimonials`);
       const data = await res.json();
       if (Array.isArray(data)) {
         setTestimonials(data);
@@ -41,7 +42,7 @@ export function AdminTestimonials() {
     if (!confirm("Hapus testimonial ini?")) return;
     try {
       const token = localStorage.getItem("adminToken");
-      await fetch(`http://localhost:5000/api/cms/testimonials/${id}`, {
+      await fetch(`${API_URL}/api/cms/testimonials/${id}`, {
         method: "DELETE",
         headers: { "Authorization": `Bearer ${token}` }
       });
@@ -69,7 +70,7 @@ export function AdminTestimonials() {
 
     try {
       const token = localStorage.getItem("adminToken");
-      const res = await fetch("http://localhost:5000/api/cms/testimonials", {
+      const res = await fetch(`${API_URL}/api/cms/testimonials`, {
         method: "POST",
         headers: {
           "Authorization": `Bearer ${token}`
@@ -207,7 +208,7 @@ export function AdminTestimonials() {
                 <div className="flex-shrink-0">
                   {item.avatarUrl ? (
                     <img
-                      src={item.avatarUrl.startsWith("http") ? item.avatarUrl : `http://localhost:5000${item.avatarUrl}`}
+                      src={item.avatarUrl.startsWith("http") ? item.avatarUrl : `${API_URL}${item.avatarUrl}`}
                       alt={item.name}
                       className="w-14 h-14 rounded-full object-cover border-2 border-[#b89341]/30"
                     />

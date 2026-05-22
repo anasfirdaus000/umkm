@@ -1,9 +1,10 @@
+import { API_URL } from "../../../config";
 import { useEffect, useState } from "react";
 import useEmblaCarousel from "embla-carousel-react";
 import { motion } from "motion/react";
 import { Star, Quote } from "lucide-react";
 
-const API = "http://localhost:5000";
+const API = API_URL;
 
 export function TestimonialsSection() {
   const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true, align: "center" });

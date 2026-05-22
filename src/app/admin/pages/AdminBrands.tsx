@@ -1,7 +1,8 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect, FormEvent } from "react";
 import { Trash2, Plus, Building2 } from "lucide-react";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = API_URL;
 
 interface Brand {
   id: string;

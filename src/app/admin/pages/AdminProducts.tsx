@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { Trash2, Plus, Star, Package, Edit2, X } from "lucide-react";
 
@@ -18,7 +19,7 @@ interface Category {
   name: string;
 }
 
-const API = "http://localhost:5000";
+const API = API_URL;
 
 export function AdminProducts() {
   const [products, setProducts] = useState<Product[]>([]);

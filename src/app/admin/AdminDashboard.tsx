@@ -1,8 +1,9 @@
+import { API_URL } from "../../config";
 import { useState, useEffect } from "react";
 import { Link } from "react-router";
 import { Package, Building2, Star, HelpCircle, Image as ImageIcon, Video, Wrench, Tags } from "lucide-react";
 
-const API = "http://localhost:5000/api";
+const API = `${API_URL}/api`;
 
 export function AdminDashboard() {
   const [stats, setStats] = useState({

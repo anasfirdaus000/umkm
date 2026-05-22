@@ -1,7 +1,8 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { Instagram, Facebook, Twitter, MapPin, Phone, Clock, Mail, PlayCircle } from "lucide-react";
 
-const API = "http://localhost:5000";
+const API = API_URL;
 
 export function Footer() {
   const [settings, setSettings] = useState<any>(null);

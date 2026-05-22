@@ -1,10 +1,11 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 import { MessageCircle, Eye } from "lucide-react";
 import { Link } from "react-router";
 import { useSettings } from "../../context/SettingsContext";
 
-const API = "http://localhost:5000";
+const API = API_URL;
 
 export function FeaturedProducts() {
   const [products, setProducts] = useState<any[]>([]);

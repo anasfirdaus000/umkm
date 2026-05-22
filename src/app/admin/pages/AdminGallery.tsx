@@ -1,7 +1,8 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect, FormEvent } from "react";
 import { Trash2, Plus, Image } from "lucide-react";
 
-const API_BASE = "http://localhost:5000";
+const API_BASE = API_URL;
 
 interface GalleryItem {
   id: string;

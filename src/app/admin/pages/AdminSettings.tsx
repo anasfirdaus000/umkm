@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 
 export function AdminSettings() {
@@ -16,7 +17,7 @@ export function AdminSettings() {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/settings");
+      const res = await fetch(`${API_URL}/api/settings`);
       const data = await res.json();
       setSettings(data);
     } catch (err) {
@@ -46,7 +47,7 @@ export function AdminSettings() {
       if (heroBgFile4) formData.append("heroBg4", heroBgFile4);
       if (heroProductFile) formData.append("heroProduct", heroProductFile);
 
-      await fetch("http://localhost:5000/api/settings", {
+      await fetch(`${API_URL}/api/settings`, {
         method: "PUT",
         headers: { 
           "Authorization": `Bearer ${token}`
@@ -109,7 +110,7 @@ export function AdminSettings() {
                     className="w-full text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#b89341]/10 file:text-[#b89341] hover:file:bg-[#b89341]/20 file:cursor-pointer"
                   />
                   {settings?.[`heroBgUrl${num}`] && (
-                    <img src={settings[`heroBgUrl${num}`].startsWith('http') ? settings[`heroBgUrl${num}`] : `http://localhost:5000${settings[`heroBgUrl${num}`]}`} alt={`Bg ${num}`} className="mt-2 h-20 object-cover rounded" />
+                    <img src={settings[`heroBgUrl${num}`].startsWith('http') ? settings[`heroBgUrl${num}`] : `${API_URL}${settings[`heroBgUrl${num}`]}`} alt={`Bg ${num}`} className="mt-2 h-20 object-cover rounded" />
                   )}
                 </div>
               ))}
@@ -155,7 +156,7 @@ export function AdminSettings() {
                     className="w-full text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#b89341]/10 file:text-[#b89341] hover:file:bg-[#b89341]/20 file:cursor-pointer"
                   />
                   {settings?.heroProductUrl && !heroProductFile && (
-                    <img src={settings.heroProductUrl.startsWith('http') ? settings.heroProductUrl : `http://localhost:5000${settings.heroProductUrl}`} alt="Product" className="mt-2 h-20 object-contain rounded" />
+                    <img src={settings.heroProductUrl.startsWith('http') ? settings.heroProductUrl : `${API_URL}${settings.heroProductUrl}`} alt="Product" className="mt-2 h-20 object-contain rounded" />
                   )}
                 </div>
               </div>

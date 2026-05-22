@@ -1,3 +1,4 @@
+import { API_URL } from "../../config";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { motion } from "motion/react";
@@ -17,8 +18,8 @@ export function ProductDetailPage() {
 
   useEffect(() => {
     Promise.all([
-      fetch(`http://localhost:5000/api/products/${id}`).then(res => res.json()),
-      fetch(`http://localhost:5000/api/cms/categories`).then(res => res.json())
+      fetch(`${API_URL}/api/products/${id}`).then(res => res.json()),
+      fetch(`${API_URL}/api/cms/categories`).then(res => res.json())
     ])
     .then(([productData, categoriesData]) => {
       setProduct(productData);
@@ -46,7 +47,7 @@ export function ProductDetailPage() {
   const getImageUrl = (img: any) => {
     if (!img) return "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop";
     const url = typeof img === 'object' ? img.url : img;
-    return url.startsWith('http') ? url : `http://localhost:5000${url}`;
+    return url.startsWith('http') ? url : `${API_URL}${url}`;
   };
 
   const imagesList = product.images && product.images.length > 0 ? product.images : [null];

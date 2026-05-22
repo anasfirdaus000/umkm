@@ -1,7 +1,8 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { Trash2, Plus, HelpCircle } from "lucide-react";
 
-const API = "http://localhost:5000/api";
+const API = `${API_URL}/api`;
 
 export function AdminInteractions() {
   const [faqs, setFaqs] = useState<any[]>([]);

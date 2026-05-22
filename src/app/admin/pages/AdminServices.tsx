@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { Trash2, Plus, Wrench } from "lucide-react";
 
@@ -8,7 +9,7 @@ interface Service {
   imageUrl: string;
 }
 
-const API = "http://localhost:5000/api";
+const API = `${API_URL}/api`;
 
 export function AdminServices() {
   const [services, setServices] = useState<Service[]>([]);
@@ -180,7 +181,7 @@ export function AdminServices() {
                       <div className="w-16 h-16 bg-[#b89341]/10 rounded-lg flex items-center justify-center overflow-hidden shrink-0">
                         {service.imageUrl ? (
                           <img 
-                            src={service.imageUrl.startsWith('http') ? service.imageUrl : `http://localhost:5000${service.imageUrl}`} 
+                            src={service.imageUrl.startsWith('http') ? service.imageUrl : `${API_URL}${service.imageUrl}`} 
                             alt={service.title} 
                             className="w-full h-full object-cover" 
                           />

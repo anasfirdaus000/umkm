@@ -1,3 +1,4 @@
+import { API_URL } from "../../config";
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { motion } from "motion/react";
@@ -20,13 +21,13 @@ export function CategoryPage() {
 
   useEffect(() => {
     // Fetch products
-    fetch("http://localhost:5000/api/products")
+    fetch(`${API_URL}/api/products`)
       .then(res => res.json())
       .then(data => setAllProducts(Array.isArray(data) ? data : data.products || []))
       .catch(console.error);
 
     // Fetch categories
-    fetch("http://localhost:5000/api/cms/categories")
+    fetch(`${API_URL}/api/cms/categories`)
       .then(res => res.json())
       .then(data => setCategoriesList(Array.isArray(data) ? data : data.categories || []))
       .catch(console.error)
@@ -153,7 +154,7 @@ export function CategoryPage() {
                           product.images && product.images.length > 0 
                             ? (product.images[0].url || product.images[0]).startsWith('http') 
                               ? (product.images[0].url || product.images[0])
-                              : `http://localhost:5000${(product.images[0].url || product.images[0])}`
+                              : `${API_URL}${(product.images[0].url || product.images[0])}`
                             : "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=600&auto=format&fit=crop"
                         }
                         alt={product.name}

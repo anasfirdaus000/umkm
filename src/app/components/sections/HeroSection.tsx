@@ -1,3 +1,4 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "motion/react";
 import { ArrowRight, ShoppingBag } from "lucide-react";
@@ -16,7 +17,7 @@ export function HeroSection() {
   ];
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/settings")
+    fetch(`${API_URL}/api/settings`)
       .then(res => res.json())
       .then(data => setSettings(data))
       .catch(console.error);
@@ -25,13 +26,13 @@ export function HeroSection() {
   const backgrounds = settings 
     ? [settings.heroBgUrl1, settings.heroBgUrl2, settings.heroBgUrl3, settings.heroBgUrl4]
         .filter(Boolean)
-        .map(url => url.startsWith('http') ? url : `http://localhost:5000${url}`)
+        .map(url => url.startsWith('http') ? url : `${API_URL}${url}`)
     : [];
     
   const activeBackgrounds = backgrounds.length > 0 ? backgrounds : defaultBackgrounds;
 
   const productUrl = settings?.heroProductUrl
-    ? (settings.heroProductUrl.startsWith('http') ? settings.heroProductUrl : `http://localhost:5000${settings.heroProductUrl}`)
+    ? (settings.heroProductUrl.startsWith('http') ? settings.heroProductUrl : `${API_URL}${settings.heroProductUrl}`)
     : "https://images.unsplash.com/photo-1542272604-787c3835535d?auto=format&fit=crop&q=80";
 
   useEffect(() => {

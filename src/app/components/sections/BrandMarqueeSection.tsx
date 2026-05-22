@@ -1,7 +1,8 @@
+import { API_URL } from "../../../config";
 import { useState, useEffect } from "react";
 import { motion } from "motion/react";
 
-const API = "http://localhost:5000";
+const API = API_URL;
 
 export function BrandMarqueeSection() {
   const [brands, setBrands] = useState<any[]>([]);

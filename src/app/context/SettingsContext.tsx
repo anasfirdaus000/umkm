@@ -1,3 +1,4 @@
+import { API_URL } from "../../config";
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface SiteSettings {
@@ -57,7 +58,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/settings")
+    fetch(`${API_URL}/api/settings`)
       .then(res => res.json())
       .then(data => {
         if (data) {
