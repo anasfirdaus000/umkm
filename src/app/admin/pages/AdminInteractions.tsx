@@ -8,6 +8,8 @@ export function AdminInteractions() {
   const [faqs, setFaqs] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
+  const [success, setSuccess] = useState("");
+  const [error, setError] = useState("");
 
   useEffect(() => {
     fetchFaqs();
@@ -39,8 +41,12 @@ export function AdminInteractions() {
         headers: { "Authorization": `Bearer ${token}` }
       });
       fetchFaqs();
+      setSuccess("FAQ berhasil dihapus!");
+      setTimeout(() => setSuccess(""), 3000);
     } catch (err) {
       console.error(err);
+      setError("Gagal menghapus FAQ.");
+      setTimeout(() => setError(""), 3000);
     }
   };
 
@@ -55,7 +61,7 @@ export function AdminInteractions() {
 
     try {
       const token = localStorage.getItem("adminToken");
-      await fetch(`${API}/cms/faqs`, {
+      const res = await fetch(`${API}/cms/faqs`, {
         method: "POST",
         headers: { 
           "Content-Type": "application/json",
@@ -63,10 +69,16 @@ export function AdminInteractions() {
         },
         body: JSON.stringify(data)
       });
+      if (!res.ok) throw new Error("Gagal menambahkan FAQ");
+      
       e.currentTarget.reset();
       fetchFaqs();
-    } catch (err) {
+      setSuccess("FAQ berhasil ditambahkan!");
+      setTimeout(() => setSuccess(""), 3000);
+    } catch (err: any) {
       console.error(err);
+      setError(err.message || "Gagal menambahkan FAQ.");
+      setTimeout(() => setError(""), 3000);
     } finally {
       setSaving(false);
     }
@@ -79,6 +91,18 @@ export function AdminInteractions() {
         <h2 className="text-2xl font-bold text-stone-800">Kelola FAQ</h2>
         <p className="text-stone-500 mt-1">Pertanyaan yang tampil di section "Pertanyaan yang Sering Diajukan" pada website.</p>
       </div>
+
+      {/* Notifications */}
+      {error && (
+        <div className="p-3 bg-red-50 border border-red-200 rounded-lg text-red-600 text-sm">
+          {error}
+        </div>
+      )}
+      {success && (
+        <div className="p-3 bg-green-50 border border-green-200 rounded-lg text-green-600 text-sm">
+          {success}
+        </div>
+      )}
 
       {/* Add Form */}
       <div className="bg-white p-6 rounded-xl shadow-sm border border-stone-200">

@@ -3,17 +3,28 @@ import { useState, useEffect } from "react";
 
 export function AdminSettings() {
   const [settings, setSettings] = useState<any>(null);
+  const [products, setProducts] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [heroBgFile1, setHeroBgFile1] = useState<File | null>(null);
   const [heroBgFile2, setHeroBgFile2] = useState<File | null>(null);
   const [heroBgFile3, setHeroBgFile3] = useState<File | null>(null);
   const [heroBgFile4, setHeroBgFile4] = useState<File | null>(null);
-  const [heroProductFile, setHeroProductFile] = useState<File | null>(null);
 
   useEffect(() => {
     fetchSettings();
+    fetchProducts();
   }, []);
+
+  const fetchProducts = async () => {
+    try {
+      const res = await fetch(`${API_URL}/api/products`);
+      const data = await res.json();
+      setProducts(data.products || data);
+    } catch (err) {
+      console.error(err);
+    }
+  };
 
   const fetchSettings = async () => {
     try {
@@ -45,7 +56,6 @@ export function AdminSettings() {
       if (heroBgFile2) formData.append("heroBg2", heroBgFile2);
       if (heroBgFile3) formData.append("heroBg3", heroBgFile3);
       if (heroBgFile4) formData.append("heroBg4", heroBgFile4);
-      if (heroProductFile) formData.append("heroProduct", heroProductFile);
 
       await fetch(`${API_URL}/api/settings`, {
         method: "PUT",
@@ -118,48 +128,45 @@ export function AdminSettings() {
 
             {/* Product Details */}
             <div className="bg-stone-50 p-4 rounded-lg border border-stone-200 space-y-4">
-              <h4 className="font-semibold text-stone-800">Detail Produk Hero</h4>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Judul Produk</label>
-                  <input 
-                    type="text" 
-                    className="w-full px-4 py-2 border border-stone-300 rounded-lg"
-                    value={settings?.heroProductTitle || ""}
-                    onChange={(e) => setSettings({...settings, heroProductTitle: e.target.value})}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Harga Produk</label>
-                  <input 
-                    type="text" 
-                    className="w-full px-4 py-2 border border-stone-300 rounded-lg"
-                    value={settings?.heroProductPrice || ""}
-                    onChange={(e) => setSettings({...settings, heroProductPrice: e.target.value})}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Keterangan Singkat</label>
-                  <input 
-                    type="text" 
-                    className="w-full px-4 py-2 border border-stone-300 rounded-lg"
-                    value={settings?.heroProductDesc || ""}
-                    onChange={(e) => setSettings({...settings, heroProductDesc: e.target.value})}
-                  />
-                </div>
-                <div>
-                  <label className="block text-sm font-medium text-stone-700 mb-1">Product Image (Opsional)</label>
-                  <input 
-                    type="file" 
-                    accept="image/*"
-                    onChange={(e) => setHeroProductFile(e.target.files?.[0] || null)}
-                    className="w-full text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#b89341]/10 file:text-[#b89341] hover:file:bg-[#b89341]/20 file:cursor-pointer"
-                  />
-                  {settings?.heroProductUrl && !heroProductFile && (
-                    <img src={settings.heroProductUrl.startsWith('http') ? settings.heroProductUrl : `${API_URL}${settings.heroProductUrl}`} alt="Product" className="mt-2 h-20 object-contain rounded" />
-                  )}
-                </div>
+              <h4 className="font-semibold text-stone-800">Pilih Produk Hero</h4>
+              <p className="text-sm text-stone-500">Pilih produk dari katalog untuk ditampilkan di halaman utama.</p>
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Produk Unggulan</label>
+                <select 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg"
+                  value={settings?.heroProductTitle || ""}
+                  onChange={(e) => {
+                    const selected = products.find(p => p.name === e.target.value || p.title === e.target.value);
+                    if (selected) {
+                      setSettings({
+                        ...settings,
+                        heroProductTitle: selected.name || selected.title,
+                        heroProductPrice: `Rp ${selected.price.toLocaleString('id-ID')}`,
+                        heroProductDesc: selected.description.substring(0, 50) + "...",
+                        heroProductUrl: selected.images?.[0]?.url || selected.imageUrl || ""
+                      });
+                    }
+                  }}
+                >
+                  <option value="">-- Pilih Produk --</option>
+                  {products.map((product: any) => (
+                    <option key={product.id} value={product.name || product.title}>
+                      {product.name || product.title}
+                    </option>
+                  ))}
+                </select>
               </div>
+              
+              {settings?.heroProductUrl && (
+                <div className="mt-4 p-4 bg-white rounded-lg border border-stone-200 flex gap-4 items-center">
+                  <img src={settings.heroProductUrl.startsWith('http') ? settings.heroProductUrl : `${API_URL}${settings.heroProductUrl}`} alt="Product" className="h-20 w-20 object-cover rounded" />
+                  <div>
+                    <h5 className="font-bold text-stone-800">{settings.heroProductTitle}</h5>
+                    <p className="text-sm text-stone-500">{settings.heroProductDesc}</p>
+                    <p className="text-sm font-semibold text-[#b89341]">{settings.heroProductPrice}</p>
+                  </div>
+                </div>
+              )}
             </div>
           </div>
 

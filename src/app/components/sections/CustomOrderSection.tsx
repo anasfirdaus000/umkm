@@ -14,13 +14,15 @@ interface CustomService {
 
 export function CustomOrderSection() {
   const [services, setServices] = useState<CustomService[]>([]);
+  const [loading, setLoading] = useState(true);
   const { getWhatsAppUrl } = useSettings();
 
   useEffect(() => {
     fetch(`${API_URL}/api/cms/services`)
       .then(res => res.json())
       .then(data => setServices(data))
-      .catch(console.error);
+      .catch(console.error)
+      .finally(() => setLoading(false));
   }, []);
 
   return (
@@ -39,9 +41,13 @@ export function CustomOrderSection() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8 }}
-            className="grid grid-cols-1 sm:grid-cols-2 gap-4"
+            className={loading || services.length === 0 ? "" : "grid grid-cols-1 sm:grid-cols-2 gap-4"}
           >
-            {services.length > 0 ? services.map((service, idx) => (
+            {loading ? (
+              <div className="col-span-2 aspect-[4/5] rounded-[3rem] overflow-hidden relative shadow-2xl flex items-center justify-center bg-stone-100 border border-stone-200">
+                <div className="w-12 h-12 border-4 border-[#b89341] border-t-transparent rounded-full animate-spin"></div>
+              </div>
+            ) : services.length > 0 ? services.map((service, idx) => (
               <div key={service.id} className="bg-white p-6 rounded-3xl shadow-lg border border-stone-100 hover:-translate-y-1 transition-transform">
                 <div className="w-12 h-12 rounded-xl bg-[#b89341]/10 flex items-center justify-center text-[#b89341] mb-4 overflow-hidden">
                   {service.imageUrl ? (
