@@ -116,8 +116,9 @@ export default function AdminVideos() {
 
   const getYoutubeThumbnail = (url: string) => {
     if (!url) return "";
-    const id = url.split("v=")[1]?.split("&")[0];
-    return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : "";
+    const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+    const match = url.match(regExp);
+    return match ? `https://img.youtube.com/vi/${match[1]}/mqdefault.jpg` : "";
   };
 
   return (

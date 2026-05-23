@@ -11,13 +11,16 @@ interface VideoItem {
   thumbnailUrl?: string;
 }
 
+const getYoutubeId = (url: string) => {
+  const regExp = /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?|shorts)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/i;
+  const match = url.match(regExp);
+  return match ? match[1] : null;
+};
+
 const getYoutubeThumbnail = (url?: string) => {
   if (!url) return "";
-  const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/;
-  const match = url.match(regExp);
-  return match && match[2].length === 11
-    ? `https://img.youtube.com/vi/${match[2]}/hqdefault.jpg`
-    : "";
+  const id = getYoutubeId(url);
+  return id ? `https://img.youtube.com/vi/${id}/hqdefault.jpg` : "";
 };
 
 export function VideoSection() {
@@ -104,8 +107,8 @@ export function VideoSection() {
                   src={
                     activeVideo.youtubeUrl.includes('drive.google.com')
                       ? activeVideo.youtubeUrl.replace('/view', '/preview').split('?')[0]
-                      : activeVideo.youtubeUrl.includes('watch?v=')
-                      ? activeVideo.youtubeUrl.replace('watch?v=', 'embed/') + '?autoplay=1'
+                      : getYoutubeId(activeVideo.youtubeUrl)
+                      ? `https://www.youtube.com/embed/${getYoutubeId(activeVideo.youtubeUrl)}?autoplay=1`
                       : activeVideo.youtubeUrl + '?autoplay=1'
                   }
                   title={activeVideo.title}
