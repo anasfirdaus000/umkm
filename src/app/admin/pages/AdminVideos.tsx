@@ -74,9 +74,15 @@ export default function AdminVideos() {
         body: formData,
       });
 
+      if (res.status === 413) {
+        throw new Error("Gagal: Ukuran file terlalu besar! Server Vercel membatasi maksimal file 4.5MB. Silakan gunakan opsi Link YouTube.");
+      }
+      if (res.status === 504) {
+        throw new Error("Gagal: Waktu upload habis (Timeout). Koneksi internet lambat atau file terlalu besar untuk diproses server.");
+      }
       if (!res.ok) {
         const errData = await res.json().catch(() => null);
-        throw new Error(errData?.message ?? "Gagal menambahkan video. Pastikan format didukung (mp4/webm).");
+        throw new Error(errData?.message ?? "Gagal menambahkan video. Jika file terlalu besar, server otomatis memblokirnya.");
       }
 
       setSuccess("Video berhasil ditambahkan!");
