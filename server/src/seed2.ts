@@ -30,7 +30,7 @@ async function main() {
       instagram: 'https://instagram.com',
       facebook: 'https://facebook.com',
       tiktok: 'https://tiktok.com',
-      heroBgUrl: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=2000&auto=format&fit=crop',
+      heroBgUrl1: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=2000&auto=format&fit=crop',
       heroProductUrl: ''
     },
     create: {
@@ -43,7 +43,7 @@ async function main() {
       instagram: 'https://instagram.com',
       facebook: 'https://facebook.com',
       tiktok: 'https://tiktok.com',
-      heroBgUrl: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=2000&auto=format&fit=crop',
+      heroBgUrl1: 'https://images.unsplash.com/photo-1558981806-ec527fa84c39?q=80&w=2000&auto=format&fit=crop',
       heroProductUrl: ''
     }
   });
