@@ -7,6 +7,7 @@ import { useSettings } from "../../context/SettingsContext";
 export function HeroSection() {
   const [currentBg, setCurrentBg] = useState(0);
   const [settings, setSettings] = useState<any>(null);
+  const [products, setProducts] = useState<any[]>([]);
   const { getWhatsAppUrl } = useSettings();
 
   const defaultBackgrounds = [
@@ -20,6 +21,11 @@ export function HeroSection() {
     fetch(`${API_URL}/api/settings`)
       .then(res => res.json())
       .then(data => setSettings(data))
+      .catch(console.error);
+
+    fetch(`${API_URL}/api/products`)
+      .then(res => res.json())
+      .then(data => setProducts(data.products || data))
       .catch(console.error);
   }, []);
 
@@ -153,8 +159,8 @@ export function HeroSection() {
             className="relative w-full max-w-md aspect-[3/4] bg-white rounded-3xl p-4 shadow-2xl shadow-stone-900/10 transform-style-3d group hover:rotate-y-0 hover:rotate-x-0 transition-transform duration-700 ease-out"
           >
             <a 
-              href={getWhatsAppUrl(`Halo kak, saya tertarik dengan ${settings?.heroProductTitle || 'Jas Hujan Premium'}`)}
-              target="_blank"
+              href={products.find(p => p.name === settings?.heroProductTitle)?.id ? `/produk/${products.find(p => p.name === settings?.heroProductTitle)?.id}` : getWhatsAppUrl(`Halo kak, saya tertarik dengan ${settings?.heroProductTitle || 'Jas Hujan Premium'}`)}
+              target={products.find(p => p.name === settings?.heroProductTitle) ? "_self" : "_blank"}
               rel="noreferrer"
               className="block w-full h-full rounded-2xl overflow-hidden relative cursor-pointer"
             >

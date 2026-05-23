@@ -47,7 +47,7 @@ export function AdminSettings() {
       
       // Append all settings text fields
       Object.keys(settings).forEach(key => {
-        if (!key.startsWith('heroBgUrl') && key !== 'heroProductUrl' && key !== 'id' && key !== 'updatedAt') {
+        if (!key.startsWith('heroBgUrl') && key !== 'id' && key !== 'updatedAt') {
           formData.append(key, settings[key]);
         }
       });
