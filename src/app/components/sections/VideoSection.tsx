@@ -101,9 +101,13 @@ export function VideoSection() {
                 />
               ) : activeVideo.youtubeUrl ? (
                 <iframe
-                  src={activeVideo.youtubeUrl.includes('watch?v=') 
-                    ? activeVideo.youtubeUrl.replace('watch?v=', 'embed/') + '?autoplay=1' 
-                    : activeVideo.youtubeUrl + '?autoplay=1'}
+                  src={
+                    activeVideo.youtubeUrl.includes('drive.google.com')
+                      ? activeVideo.youtubeUrl.replace('/view', '/preview').split('?')[0]
+                      : activeVideo.youtubeUrl.includes('watch?v=')
+                      ? activeVideo.youtubeUrl.replace('watch?v=', 'embed/') + '?autoplay=1'
+                      : activeVideo.youtubeUrl + '?autoplay=1'
+                  }
                   title={activeVideo.title}
                   className="w-full h-full"
                   allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"

@@ -20,6 +20,7 @@ export default function AdminVideos() {
   const [success, setSuccess] = useState("");
 
   const [title, setTitle] = useState("");
+  const [youtubeUrl, setYoutubeUrl] = useState("");
   const [videoFile, setVideoFile] = useState<File | null>(null);
 
   const token = localStorage.getItem("adminToken");
@@ -44,13 +45,14 @@ export default function AdminVideos() {
 
   const resetForm = () => {
     setTitle("");
+    setYoutubeUrl("");
     setVideoFile(null);
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    if (!title.trim() || !videoFile) {
-      setError("Judul dan File Video wajib diisi");
+    if (!title.trim() || (!videoFile && !youtubeUrl.trim())) {
+      setError("Judul wajib diisi, dan pilih salah satu: Video Lokal ATAU Link YouTube");
       return;
     }
 
@@ -61,7 +63,8 @@ export default function AdminVideos() {
     try {
       const formData = new FormData();
       formData.append("title", title.trim());
-      formData.append("videoUrl", videoFile);
+      if (youtubeUrl.trim()) formData.append("youtubeUrl", youtubeUrl.trim());
+      if (videoFile) formData.append("videoUrl", videoFile);
 
       const res = await fetch(`${API_BASE}/api/cms/videos`, {
         method: "POST",
@@ -151,15 +154,25 @@ export default function AdminVideos() {
                 className="w-full px-4 py-2 border border-stone-300 rounded-lg text-stone-800 focus:ring-2 focus:ring-[#b89341] outline-none"
               />
             </div>
-            <div>
-              <label className="block text-sm font-medium text-stone-700 mb-1">File Video (Lokal)</label>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-stone-700 mb-1">Pilihan 1: Link YouTube / Google Drive</label>
+              <input
+                type="text"
+                value={youtubeUrl}
+                onChange={(e) => setYoutubeUrl(e.target.value)}
+                placeholder="Contoh: https://www.youtube.com/watch?v=..."
+                className="w-full px-4 py-2 border border-stone-300 rounded-lg text-stone-800 focus:ring-2 focus:ring-[#b89341] outline-none"
+              />
+            </div>
+            <div className="md:col-span-2">
+              <label className="block text-sm font-medium text-stone-700 mb-1">Pilihan 2: Upload File Video Lokal (Max 50MB)</label>
               <input
                 type="file"
                 accept="video/mp4,video/webm"
                 onChange={(e) => setVideoFile(e.target.files?.[0] || null)}
                 className="w-full px-4 py-2 border border-stone-300 rounded-lg file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:bg-[#b89341] file:text-white file:text-sm file:font-medium file:cursor-pointer hover:file:bg-[#a07c33]"
               />
-              <p className="text-xs text-stone-500 mt-2">Disarankan ukuran di bawah 10MB (MP4/WEBM).</p>
+              <p className="text-xs text-stone-500 mt-2">Pilih salah satu saja. Jika mengisi Link YouTube, file lokal akan diabaikan (atau sebaliknya). <br/><span className="text-red-500 font-semibold">*Catatan Vercel:</span> Upload file lokal besar mungkin terblokir oleh limit server Vercel (4.5MB). Menggunakan Link YouTube sangat disarankan.</p>
             </div>
           </div>
           <div className="flex justify-end pt-4">
