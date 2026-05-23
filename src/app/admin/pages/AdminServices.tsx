@@ -73,7 +73,7 @@ export function AdminServices() {
       const formData = new FormData();
       formData.append("title", title);
       formData.append("description", description);
-      formData.append("image", imageFile);
+      formData.append("imageUrl", imageFile);
 
       const res = await fetch(`${API}/cms/services`, {
         method: "POST",
