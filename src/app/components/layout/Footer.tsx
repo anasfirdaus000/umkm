@@ -19,7 +19,11 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-6">
-              <img src="/logo.jpeg" alt="MORVA MODE INDONESIA" className="h-10 w-auto object-contain rounded-md" />
+              <img 
+                src={settings?.logoUrl ? (settings.logoUrl.startsWith('http') ? settings.logoUrl : `${API_URL}${settings.logoUrl}`) : "/logo.jpeg"} 
+                alt="MORVA MODE INDONESIA" 
+                className="h-10 w-auto object-contain rounded-md" 
+              />
               <span className="font-serif text-2xl font-bold text-white uppercase tracking-tight">
                 MORVA MODE
               </span>

@@ -10,6 +10,7 @@ export function AdminSettings() {
   const [heroBgFile2, setHeroBgFile2] = useState<File | null>(null);
   const [heroBgFile3, setHeroBgFile3] = useState<File | null>(null);
   const [heroBgFile4, setHeroBgFile4] = useState<File | null>(null);
+  const [logoFile, setLogoFile] = useState<File | null>(null);
 
   useEffect(() => {
     fetchSettings();
@@ -47,7 +48,7 @@ export function AdminSettings() {
       
       // Append all settings text fields
       Object.keys(settings).forEach(key => {
-        if (!key.startsWith('heroBgUrl') && key !== 'id' && key !== 'updatedAt') {
+        if (!key.startsWith('heroBgUrl') && key !== 'logoUrl' && key !== 'id' && key !== 'updatedAt') {
           formData.append(key, settings[key]);
         }
       });
@@ -56,6 +57,7 @@ export function AdminSettings() {
       if (heroBgFile2) formData.append("heroBg2", heroBgFile2);
       if (heroBgFile3) formData.append("heroBg3", heroBgFile3);
       if (heroBgFile4) formData.append("heroBg4", heroBgFile4);
+      if (logoFile) formData.append("logo", logoFile);
 
       await fetch(`${API_URL}/api/settings`, {
         method: "PUT",
@@ -82,6 +84,26 @@ export function AdminSettings() {
       
       <form onSubmit={handleSave} className="space-y-6 max-w-3xl">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          
+          {/* Logo Section */}
+          <div className="space-y-4 md:col-span-2">
+            <h3 className="text-lg font-semibold text-[#b89341] border-b pb-2">Logo Website</h3>
+            <div>
+              <label className="block text-sm font-medium text-stone-700 mb-1">Upload Logo</label>
+              <input 
+                type="file" 
+                accept="image/*"
+                onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
+                className="w-full text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#b89341]/10 file:text-[#b89341] hover:file:bg-[#b89341]/20 file:cursor-pointer"
+              />
+              {settings?.logoUrl && !logoFile && (
+                <div className="mt-4 p-4 bg-stone-100 rounded flex items-center justify-center w-48 h-24">
+                  <img src={settings.logoUrl.startsWith('http') ? settings.logoUrl : `${API_URL}${settings.logoUrl}`} alt="Logo" className="max-h-full max-w-full object-contain" />
+                </div>
+              )}
+            </div>
+          </div>
+
           {/* Hero Section */}
           <div className="space-y-4 md:col-span-2">
             <h3 className="text-lg font-semibold text-[#b89341] border-b pb-2">Hero Section</h3>

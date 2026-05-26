@@ -18,6 +18,7 @@ export interface SiteSettings {
   heroBgUrl2: string;
   heroBgUrl3: string;
   heroBgUrl4: string;
+  logoUrl?: string;
 }
 
 const defaultSettings: SiteSettings = {
@@ -37,6 +38,7 @@ const defaultSettings: SiteSettings = {
   heroBgUrl2: "",
   heroBgUrl3: "",
   heroBgUrl4: "",
+  logoUrl: "",
 };
 
 interface SettingsContextType {
@@ -69,6 +71,16 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           data.whatsapp = wa;
           
           setSettings(prev => ({ ...prev, ...data }));
+
+          // Dynamically update favicon if logoUrl is provided
+          if (data.logoUrl) {
+            const logoFullUrl = data.logoUrl.startsWith('http') ? data.logoUrl : `${API_URL}${data.logoUrl}`;
+            const link: HTMLLinkElement = document.querySelector("link[rel~='icon']") || document.createElement('link');
+            link.type = 'image/x-icon';
+            link.rel = 'icon';
+            link.href = logoFullUrl;
+            document.getElementsByTagName('head')[0].appendChild(link);
+          }
         }
       })
       .catch(console.error)

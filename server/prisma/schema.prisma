@@ -61,6 +61,7 @@ model SiteSettings {
   heroBgUrl2       String?
   heroBgUrl3       String?
   heroBgUrl4       String?
+  logoUrl          String?
   heroProductUrl   String?
   heroProductTitle String   @default("Jas Hujan Premium")
   heroProductPrice String   @default("Rp 250.000")

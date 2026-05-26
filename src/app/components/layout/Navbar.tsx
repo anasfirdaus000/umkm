@@ -3,10 +3,11 @@ import { Link } from "react-router";
 import { Menu, X, ShoppingBag, Search, ShoppingCart, MessageCircle } from "lucide-react";
 import { useSettings } from "../../context/SettingsContext";
 import { motion, AnimatePresence } from "motion/react";
+import { API_URL } from "../../../config";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
-  const { getWhatsAppUrl } = useSettings();
+  const { getWhatsAppUrl, settings } = useSettings();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   useEffect(() => {
@@ -27,6 +28,8 @@ export function Navbar() {
     { name: "FAQ", href: "/#faq" },
   ];
 
+  const logoUrl = settings?.logoUrl ? (settings.logoUrl.startsWith('http') ? settings.logoUrl : `${API_URL}${settings.logoUrl}`) : "/logo.jpeg";
+
   return (
     <>
       <motion.nav
@@ -40,7 +43,7 @@ export function Navbar() {
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-3 group">
-            <img src="/logo.jpeg" alt="MORVA MODE INDONESIA" className="h-12 w-auto object-contain" />
+            <img src={logoUrl} alt="MORVA MODE INDONESIA" className="h-12 w-auto object-contain" />
             <span className={`font-serif text-xl font-bold tracking-tight uppercase ${isScrolled ? 'text-stone-900' : 'text-white'}`}>
               MORVA MODE
             </span>

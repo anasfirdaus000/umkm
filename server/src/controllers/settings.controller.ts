@@ -37,6 +37,7 @@ export const updateSettings = async (req: Request, res: Response) => {
     if (files?.heroBg3?.[0]) data.heroBgUrl3 = files.heroBg3[0].path;
     if (files?.heroBg4?.[0]) data.heroBgUrl4 = files.heroBg4[0].path;
     if (files?.heroProduct?.[0]) data.heroProductUrl = files.heroProduct[0].path;
+    if (files?.logo?.[0]) data.logoUrl = files.logo[0].path;
 
     // clean up undefined/null values so Prisma doesn't complain about updating with undefined
     Object.keys(data).forEach(key => data[key] === undefined && delete data[key]);
