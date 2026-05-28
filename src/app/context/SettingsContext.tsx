@@ -77,8 +77,20 @@ const SettingsContext = createContext<SettingsContextType>({
 
 export const useSettings = () => useContext(SettingsContext);
 
+const getInitialSettings = (): SiteSettings => {
+  try {
+    const cached = localStorage.getItem('siteSettings');
+    if (cached) {
+      return { ...defaultSettings, ...JSON.parse(cached) };
+    }
+  } catch (e) {
+    console.error("Failed to parse cached settings", e);
+  }
+  return defaultSettings;
+};
+
 export function SettingsProvider({ children }: { children: ReactNode }) {
-  const [settings, setSettings] = useState<SiteSettings>(defaultSettings);
+  const [settings, setSettings] = useState<SiteSettings>(getInitialSettings);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -92,7 +104,11 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
           if (wa.startsWith('0')) wa = '62' + wa.substring(1);
           data.whatsapp = wa;
           
-          setSettings(prev => ({ ...prev, ...data }));
+          setSettings(prev => {
+            const next = { ...prev, ...data };
+            localStorage.setItem('siteSettings', JSON.stringify(next));
+            return next;
+          });
 
           // Dynamically update favicon if logoUrl is provided
           if (data.logoUrl) {
