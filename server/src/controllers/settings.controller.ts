@@ -16,7 +16,16 @@ const initSettings = async () => {
 // GET SETTINGS (Public)
 export const getSettings = async (req: Request, res: Response) => {
   try {
-    const settings = await initSettings();
+    await initSettings(); // ensure it exists
+    const settings = await prisma.siteSettings.findUnique({
+      where: { id: 'global' }
+    });
+    
+    // Prevent caching
+    res.setHeader('Cache-Control', 'no-store, no-cache, must-revalidate, proxy-revalidate');
+    res.setHeader('Pragma', 'no-cache');
+    res.setHeader('Expires', '0');
+    
     res.json(settings);
   } catch (error) {
     console.error(error);

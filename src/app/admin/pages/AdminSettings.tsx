@@ -30,7 +30,7 @@ export function AdminSettings() {
 
   const fetchSettings = async () => {
     try {
-      const res = await fetch(`${API_URL}/api/settings`);
+      const res = await fetch(`${API_URL}/api/settings?t=${new Date().getTime()}`);
       const data = await res.json();
       setSettings(data);
     } catch (err) {
@@ -61,18 +61,24 @@ export function AdminSettings() {
       if (logoFile) formData.append("logo", logoFile);
       if (aboutImageFile) formData.append("aboutImage", aboutImageFile);
 
-      await fetch(`${API_URL}/api/settings`, {
+      const response = await fetch(`${API_URL}/api/settings`, {
         method: "PUT",
         headers: { 
           "Authorization": `Bearer ${token}`
         },
         body: formData
       });
+
+      if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(`Server Error: ${response.status} - ${errorText}`);
+      }
+
       alert("Pengaturan berhasil disimpan!");
       fetchSettings(); // Refresh data
-    } catch (err) {
+    } catch (err: any) {
       console.error(err);
-      alert("Gagal menyimpan pengaturan.");
+      alert(`Gagal menyimpan pengaturan: ${err.message}`);
     } finally {
       setSaving(false);
     }
