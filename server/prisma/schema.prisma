@@ -73,6 +73,8 @@ model SiteSettings {
   aboutDescription   String   @default("MORVA MODE INDONESIA hadir sebagai solusi perlengkapan outdoor dan perlindungan harian Anda. Kami berfokus pada produksi jas hujan premium, cover motor, dan berbagai perlengkapan tahan cuaca lainnya dengan standar kualitas tertinggi.\n\nDengan mengedepankan material terbaik dan proses quality control yang ketat, kami berkomitmen untuk memberikan perlindungan maksimal bagi Anda dan aset berharga Anda dari berbagai kondisi cuaca ekstrim di Indonesia.")
   aboutVision        String   @default("Menjadi brand lokal terkemuka di Indonesia yang dikenal luas akan inovasi dan kualitas produk perlengkapan outdoor, serta menjadi pilihan utama masyarakat dalam mencari perlindungan ekstra untuk aktivitas sehari-hari.")
   aboutMission       String   @default("Menyediakan produk dengan durabilitas tinggi menggunakan bahan baku terbaik.\nMemberikan pelayanan pelanggan yang cepat, ramah, dan solutif.\nTerus berinovasi menciptakan desain yang ergonomis dan sesuai dengan tren.\nMemberdayakan sumber daya lokal untuk memajukan industri kreatif Indonesia.")
+  aboutGuaranteeTitle String  @default("Garansi Kualitas 100%")
+  aboutGuaranteeDesc  String  @default("Material premium tahan lama.")
   aboutContactTitle  String   @default("Hubungi Kami")
   aboutContactDesc   String   @default("Punya pertanyaan seputar produk, kerja sama, atau pemesanan custom (B2B/Corporate)? Tim kami selalu siap membantu Anda.")
   whatsapp         String   @default("628137509422")

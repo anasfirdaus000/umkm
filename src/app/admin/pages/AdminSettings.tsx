@@ -335,6 +335,25 @@ export function AdminSettings() {
                 />
               </div>
 
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-stone-700 mb-1">Judul Garansi</label>
+                <input 
+                  type="text" 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg"
+                  value={settings?.aboutGuaranteeTitle || ""}
+                  onChange={(e) => setSettings({...settings, aboutGuaranteeTitle: e.target.value})}
+                />
+              </div>
+              
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-stone-700 mb-1">Deskripsi Garansi</label>
+                <textarea 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg h-20"
+                  value={settings?.aboutGuaranteeDesc || ""}
+                  onChange={(e) => setSettings({...settings, aboutGuaranteeDesc: e.target.value})}
+                />
+              </div>
+
               <div>
                 <label className="block text-sm font-medium text-stone-700 mb-1">Judul Hubungi Kami</label>
                 <input 

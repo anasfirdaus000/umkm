@@ -56,8 +56,8 @@ export function AboutPage() {
                 <ShieldCheck size={28} />
               </div>
               <div>
-                <h4 className="font-bold text-stone-900">Garansi Kualitas 100%</h4>
-                <p className="text-sm text-stone-500">Material premium tahan lama.</p>
+                <h4 className="font-bold text-stone-900">{settings.aboutGuaranteeTitle || "Garansi Kualitas 100%"}</h4>
+                <p className="text-sm text-stone-500 whitespace-pre-line">{settings.aboutGuaranteeDesc || "Material premium tahan lama."}</p>
               </div>
             </div>
           </motion.div>
