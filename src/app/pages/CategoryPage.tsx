@@ -1,9 +1,8 @@
-import { API_URL } from "../../config";
+import { API_URL, getImageUrl } from "../../config";
 import { useEffect, useState } from "react";
-import { useSearchParams } from "react-router";
+import { useSearchParams, Link } from "react-router";
 import { motion } from "motion/react";
 import { MessageCircle, Eye, Search, SlidersHorizontal } from "lucide-react";
-import { Link } from "react-router";
 import { useSettings } from "../context/SettingsContext";
 
 export function CategoryPage() {
@@ -152,9 +151,7 @@ export function CategoryPage() {
                       <img
                         src={
                           product.images && product.images.length > 0 
-                            ? (product.images[0].url || product.images[0]).startsWith('http') 
-                              ? (product.images[0].url || product.images[0])
-                              : `${API_URL}${(product.images[0].url || product.images[0])}`
+                            ? getImageUrl(product.images[0].url || product.images[0])
                             : "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=600&auto=format&fit=crop"
                         }
                         alt={product.name}

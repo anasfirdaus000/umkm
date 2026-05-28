@@ -1,4 +1,4 @@
-import { API_URL } from "../../../config";
+import { API_URL, getImageUrl } from "../../../config";
 import { useState, useEffect } from "react";
 import { Instagram, Facebook, Twitter, MapPin, Phone, Clock, Mail, PlayCircle } from "lucide-react";
 
@@ -20,7 +20,7 @@ export function Footer() {
           <div className="md:col-span-1">
             <div className="flex items-center gap-3 mb-6">
               <img 
-                src={settings?.logoUrl ? (settings.logoUrl.startsWith('http') ? settings.logoUrl : `${API_URL}${settings.logoUrl}`) : "/logo.jpeg"} 
+                src={getImageUrl(settings?.logoUrl) || "/logo.jpeg"} 
                 alt="MORVA MODE INDONESIA" 
                 className="h-10 w-auto object-contain rounded-md" 
               />

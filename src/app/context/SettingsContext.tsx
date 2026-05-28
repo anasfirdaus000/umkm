@@ -1,4 +1,4 @@
-import { API_URL } from "../../config";
+import { API_URL, getImageUrl } from "../../config";
 import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export interface SiteSettings {
@@ -96,7 +96,7 @@ export function SettingsProvider({ children }: { children: ReactNode }) {
 
           // Dynamically update favicon if logoUrl is provided
           if (data.logoUrl) {
-            const logoFullUrl = data.logoUrl.startsWith('http') ? data.logoUrl : `${API_URL}${data.logoUrl}`;
+            const logoFullUrl = getImageUrl(data.logoUrl);
             const link: HTMLLinkElement = document.querySelector("link[rel~='icon']") || document.createElement('link');
             link.type = 'image/x-icon';
             link.rel = 'icon';

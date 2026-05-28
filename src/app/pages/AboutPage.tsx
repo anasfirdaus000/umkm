@@ -1,7 +1,7 @@
 import { motion } from "motion/react";
 import { CheckCircle2, Target, Eye, ShieldCheck, MapPin, Phone } from "lucide-react";
 import { useSettings } from "../context/SettingsContext";
-import { API_URL } from "../../config";
+import { getImageUrl } from "../../config";
 
 export function AboutPage() {
   const { getWhatsAppUrl, settings } = useSettings();
@@ -29,7 +29,7 @@ export function AboutPage() {
           >
             <div className="aspect-[4/3] rounded-3xl overflow-hidden shadow-2xl relative">
               <img 
-                src={settings.aboutImageUrl ? (settings.aboutImageUrl.startsWith('http') ? settings.aboutImageUrl : `${API_URL}${settings.aboutImageUrl}`) : "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=1200&auto=format&fit=crop"} 
+                src={getImageUrl(settings.aboutImageUrl) || "https://images.unsplash.com/photo-1542272604-787c3835535d?q=80&w=1200&auto=format&fit=crop"} 
                 alt="Tentang Morva Mode" 
                 className="w-full h-full object-cover"
               />
@@ -37,7 +37,7 @@ export function AboutPage() {
             </div>
             {/* Logo Badge Overlay */}
             <div className="absolute -bottom-8 -right-8 w-40 h-40 bg-white rounded-3xl shadow-xl border border-stone-100 p-6 flex items-center justify-center hidden md:flex">
-              <img src={settings?.logoUrl ? (settings.logoUrl.startsWith('http') ? settings.logoUrl : `${API_URL}${settings.logoUrl}`) : "/logo.jpeg"} alt="Logo" className="w-full h-full object-contain rounded-xl" />
+              <img src={getImageUrl(settings?.logoUrl) || "/logo.jpeg"} alt="Logo" className="w-full h-full object-contain rounded-xl" />
             </div>
           </motion.div>
 

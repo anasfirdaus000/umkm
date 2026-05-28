@@ -3,7 +3,7 @@ import { Link } from "react-router";
 import { Menu, X, ShoppingBag, Search, ShoppingCart, MessageCircle } from "lucide-react";
 import { useSettings } from "../../context/SettingsContext";
 import { motion, AnimatePresence } from "motion/react";
-import { API_URL } from "../../../config";
+import { getImageUrl } from "../../../config";
 
 export function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -28,7 +28,7 @@ export function Navbar() {
     { name: "FAQ", href: "/#faq" },
   ];
 
-  const logoUrl = settings?.logoUrl ? (settings.logoUrl.startsWith('http') ? settings.logoUrl : `${API_URL}${settings.logoUrl}`) : "/logo.jpeg";
+  const logoUrl = getImageUrl(settings?.logoUrl) || "/logo.jpeg";
 
   return (
     <>

@@ -1,4 +1,4 @@
-import { API_URL } from "../../../config";
+import { API_URL, getImageUrl } from "../../../config";
 import { useState, useEffect } from "react";
 
 export function AdminSettings() {
@@ -100,7 +100,7 @@ export function AdminSettings() {
               />
               {settings?.logoUrl && !logoFile && (
                 <div className="mt-4 p-4 bg-stone-100 rounded flex items-center justify-center w-48 h-24">
-                  <img src={settings.logoUrl.startsWith('http') ? settings.logoUrl : `${API_URL}${settings.logoUrl}`} alt="Logo" className="max-h-full max-w-full object-contain" />
+                  <img src={getImageUrl(settings.logoUrl)} alt="Logo" className="max-h-full max-w-full object-contain" />
                 </div>
               )}
             </div>
@@ -144,7 +144,7 @@ export function AdminSettings() {
                     className="w-full text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#b89341]/10 file:text-[#b89341] hover:file:bg-[#b89341]/20 file:cursor-pointer"
                   />
                   {settings?.[`heroBgUrl${num}`] && (
-                    <img src={settings[`heroBgUrl${num}`].startsWith('http') ? settings[`heroBgUrl${num}`] : `${API_URL}${settings[`heroBgUrl${num}`]}`} alt={`Bg ${num}`} className="mt-2 h-20 object-cover rounded" />
+                    <img src={getImageUrl(settings[`heroBgUrl${num}`])} alt={`Bg ${num}`} className="mt-2 h-20 object-cover rounded" />
                   )}
                 </div>
               ))}
@@ -183,7 +183,7 @@ export function AdminSettings() {
               
               {settings?.heroProductUrl && (
                 <div className="mt-4 p-4 bg-white rounded-lg border border-stone-200 flex gap-4 items-center">
-                  <img src={settings.heroProductUrl.startsWith('http') ? settings.heroProductUrl : `${API_URL}${settings.heroProductUrl}`} alt="Product" className="h-20 w-20 object-cover rounded" />
+                  <img src={getImageUrl(settings.heroProductUrl)} alt="Product" className="h-20 w-20 object-cover rounded" />
                   <div>
                     <h5 className="font-bold text-stone-800">{settings.heroProductTitle}</h5>
                     <p className="text-sm text-stone-500">{settings.heroProductDesc}</p>
@@ -294,7 +294,7 @@ export function AdminSettings() {
                   className="w-full text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#b89341]/10 file:text-[#b89341] hover:file:bg-[#b89341]/20 file:cursor-pointer mb-2"
                 />
                 {settings?.aboutImageUrl && !aboutImageFile && (
-                  <img src={settings.aboutImageUrl.startsWith('http') ? settings.aboutImageUrl : `${API_URL}${settings.aboutImageUrl}`} alt="About Image" className="mt-2 h-32 object-cover rounded" />
+                  <img src={getImageUrl(settings.aboutImageUrl)} alt="About Image" className="mt-2 h-32 object-cover rounded" />
                 )}
               </div>
 

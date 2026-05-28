@@ -1,4 +1,4 @@
-import { API_URL } from "../../config";
+import { API_URL, getImageUrl as getPublicImageUrl } from "../../config";
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router";
 import { motion } from "motion/react";
@@ -47,7 +47,7 @@ export function ProductDetailPage() {
   const getImageUrl = (img: any) => {
     if (!img) return "https://images.unsplash.com/photo-1551028719-00167b16eac5?q=80&w=800&auto=format&fit=crop";
     const url = typeof img === 'object' ? img.url : img;
-    return url.startsWith('http') ? url : `${API_URL}${url}`;
+    return getPublicImageUrl(url);
   };
 
   const imagesList = product.images && product.images.length > 0 ? product.images : [null];
