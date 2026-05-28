@@ -12,7 +12,8 @@ router.put('/', authenticateToken, upload.fields([
   { name: 'heroBg3', maxCount: 1 },
   { name: 'heroBg4', maxCount: 1 },
   { name: 'heroProduct', maxCount: 1 },
-  { name: 'logo', maxCount: 1 }
+  { name: 'logo', maxCount: 1 },
+  { name: 'aboutImage', maxCount: 1 }
 ]), updateSettings);
 
 export default router;

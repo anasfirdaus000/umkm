@@ -11,6 +11,7 @@ export function AdminSettings() {
   const [heroBgFile3, setHeroBgFile3] = useState<File | null>(null);
   const [heroBgFile4, setHeroBgFile4] = useState<File | null>(null);
   const [logoFile, setLogoFile] = useState<File | null>(null);
+  const [aboutImageFile, setAboutImageFile] = useState<File | null>(null);
 
   useEffect(() => {
     fetchSettings();
@@ -48,7 +49,7 @@ export function AdminSettings() {
       
       // Append all settings text fields
       Object.keys(settings).forEach(key => {
-        if (!key.startsWith('heroBgUrl') && key !== 'logoUrl' && key !== 'id' && key !== 'updatedAt') {
+        if (!key.startsWith('heroBgUrl') && key !== 'logoUrl' && key !== 'aboutImageUrl' && key !== 'id' && key !== 'updatedAt') {
           formData.append(key, settings[key]);
         }
       });
@@ -58,6 +59,7 @@ export function AdminSettings() {
       if (heroBgFile3) formData.append("heroBg3", heroBgFile3);
       if (heroBgFile4) formData.append("heroBg4", heroBgFile4);
       if (logoFile) formData.append("logo", logoFile);
+      if (aboutImageFile) formData.append("aboutImage", aboutImageFile);
 
       await fetch(`${API_URL}/api/settings`, {
         method: "PUT",
@@ -254,6 +256,101 @@ export function AdminSettings() {
                   className="w-full px-4 py-2 border border-stone-300 rounded-lg"
                   value={settings?.tiktok || ""}
                   onChange={(e) => setSettings({...settings, tiktok: e.target.value})}
+                />
+              </div>
+            </div>
+          </div>
+
+          {/* Pengaturan Tentang Kami */}
+          <div className="space-y-4 md:col-span-2 mt-8">
+            <h3 className="text-lg font-semibold text-[#b89341] border-b pb-2">Halaman Tentang Kami</h3>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Sub Judul</label>
+                <input 
+                  type="text" 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg"
+                  value={settings?.aboutSubtitle || ""}
+                  onChange={(e) => setSettings({...settings, aboutSubtitle: e.target.value})}
+                />
+              </div>
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Judul Utama</label>
+                <input 
+                  type="text" 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg"
+                  value={settings?.aboutTitle || ""}
+                  onChange={(e) => setSettings({...settings, aboutTitle: e.target.value})}
+                />
+              </div>
+              
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-stone-700 mb-1">Gambar Utama (Hero Image)</label>
+                <input 
+                  type="file" 
+                  accept="image/*"
+                  onChange={(e) => setAboutImageFile(e.target.files?.[0] || null)}
+                  className="w-full text-sm text-stone-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-[#b89341]/10 file:text-[#b89341] hover:file:bg-[#b89341]/20 file:cursor-pointer mb-2"
+                />
+                {settings?.aboutImageUrl && !aboutImageFile && (
+                  <img src={settings.aboutImageUrl.startsWith('http') ? settings.aboutImageUrl : `${API_URL}${settings.aboutImageUrl}`} alt="About Image" className="mt-2 h-32 object-cover rounded" />
+                )}
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-stone-700 mb-1">Judul Deskripsi</label>
+                <input 
+                  type="text" 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg"
+                  value={settings?.aboutIntroTitle || ""}
+                  onChange={(e) => setSettings({...settings, aboutIntroTitle: e.target.value})}
+                />
+              </div>
+              
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-stone-700 mb-1">Deskripsi Lengkap</label>
+                <textarea 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg h-32"
+                  value={settings?.aboutDescription || ""}
+                  onChange={(e) => setSettings({...settings, aboutDescription: e.target.value})}
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-stone-700 mb-1">Visi Kami</label>
+                <textarea 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg h-24"
+                  value={settings?.aboutVision || ""}
+                  onChange={(e) => setSettings({...settings, aboutVision: e.target.value})}
+                />
+              </div>
+
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-stone-700 mb-1">Misi Kami (Pisahkan dengan baris baru)</label>
+                <textarea 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg h-32"
+                  value={settings?.aboutMission || ""}
+                  onChange={(e) => setSettings({...settings, aboutMission: e.target.value})}
+                />
+              </div>
+
+              <div>
+                <label className="block text-sm font-medium text-stone-700 mb-1">Judul Hubungi Kami</label>
+                <input 
+                  type="text" 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg"
+                  value={settings?.aboutContactTitle || ""}
+                  onChange={(e) => setSettings({...settings, aboutContactTitle: e.target.value})}
+                />
+              </div>
+              
+              <div className="md:col-span-2">
+                <label className="block text-sm font-medium text-stone-700 mb-1">Deskripsi Hubungi Kami</label>
+                <textarea 
+                  className="w-full px-4 py-2 border border-stone-300 rounded-lg h-20"
+                  value={settings?.aboutContactDesc || ""}
+                  onChange={(e) => setSettings({...settings, aboutContactDesc: e.target.value})}
                 />
               </div>
             </div>
